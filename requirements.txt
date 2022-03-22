@@ -1,0 +1,7 @@
+sentencepiece==0.1.96
+apache_beam==2.37.0
+torch==1.10.0
+tensorflow==2.8.0
+transformers==4.17.0
+datasets==2.0.0
+tensorflow_datasets==4.0.1
