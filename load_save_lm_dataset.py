@@ -12,7 +12,12 @@ random.seed(0)
 print(random.random())
 
 
-def load_oscar():
+def load_oscar() -> list:
+    """
+    Loads OSCAR dataset for Sanskrit using HuggingFace datasets
+
+    :return: list of str
+    """
 
     dataset = load_dataset("oscar", "unshuffled_deduplicated_sa")
     text = dataset["train"]["text"]
@@ -22,7 +27,12 @@ def load_oscar():
     return text
 
 
-def load_wikipedia():
+def load_wikipedia() -> list:
+    """
+    Loads WikiPedia Sanskrit dataset from TensorFlow dataset hub
+
+    :return: list of str
+    """
 
     # Construct a tf.data.Dataset
     ds = tfds.load("wikipedia/20200301.sa:1.0.0", split="train")
@@ -33,7 +43,13 @@ def load_wikipedia():
     return text
 
 
-def load_oscar_wiki_():
+def load_oscar_wiki_() -> list:
+    """
+    Calls different dataloading functions and returns combined list of texts
+    Also cleans the text by removing English alphanumericals
+
+    :return: list of str
+    """
 
     oscar_ = load_oscar()
     oscar_ = oscar_
@@ -49,14 +65,21 @@ def load_oscar_wiki_():
 
 txt = load_oscar_wiki_()
 
+# splitting into train and evaluation splits
 train_, eval_ = train_test_split(txt, test_size=0.2, random_state=0)
 
 
-def save_list_to_txt(fname, arr):
+def save_list_to_txt(fname: str, arr: list):
+    """
+    Append new line ('\n') to end of string and save the list in a txt file
+    :param fname: filename to load
+    :param arr: array to save
+    """
     with open(fname, "w") as fp:
         fp.writelines([a + "\n" for a in arr])
 
 
+# saving arrays to files
 save_list_to_txt("sanskrit_corpus_full.txt", txt)
 save_list_to_txt("sanskrit_corpus_train.txt", train_)
 save_list_to_txt("sanskrit_corpus_eval.txt", eval_)
