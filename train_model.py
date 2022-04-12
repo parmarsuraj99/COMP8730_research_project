@@ -6,6 +6,7 @@ from tqdm.auto import tqdm
 import torch
 from transformers import TrainingArguments, Trainer
 import random
+import wandb
 
 random.seed(0)
 
@@ -93,6 +94,18 @@ parser.add_argument(
     default=False,
     help="initialize model weights as random",
 )
+parser.add_argument(
+    "--wandb",
+    type=bool,
+    default=False,
+    help="report to wandb",
+)
+parser.add_argument(
+    "--chkpt_dir",
+    type=str,
+    default=".",
+    help="model artidact directory",
+)
 
 args = parser.parse_args()
 print(args.checkpoint)
@@ -100,6 +113,8 @@ print(args.checkpoint)
 # getting command-line arguments
 model_name = args.checkpoint
 from_scratch = args.from_scratch
+report_to_wandb = "wandb" if args.wandb else "none"
+chkpt_dir = args.chkpt_dir
 
 # loading model based on arguments
 model_name = "ai4bharat/indic-bert"
@@ -126,8 +141,13 @@ data_collator = DataCollatorForLanguageModeling(
 
 # https://huggingface.co/docs/transformers/v4.17.0/en/main_classes/trainer#transformers.TrainingArguments
 # model training arguments can be changed
+
+if report_to_wandb:
+    wandb.login()
+
 training_args = TrainingArguments(
-    output_dir=f"./results_scratch_{str(from_scratch)}",  # helps separating folders for two models
+    report_to=report_to_wandb,
+    output_dir=f"{chkpt_dir}/results_scratch_{str(from_scratch)}",  # helps separating folders for two models
     learning_rate=3e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
