@@ -10,12 +10,14 @@ The text file is relatively small so, one epoch takes around 20 minutes on Colab
 
 After installing helping libraries, 
 - run `python load_save_lm_dataset.py`
-- run `python train_model.py`
+- run `python train_model.py --wandb`
 - run `python train_model.py --from_scratch false`
 
-The file `train_model.py` has two arguments
+The file `train_model.py` has four arguments
 - `checkpoint`: which model/config to load from HF hub. Defaults to `ai4bharat/indic-bert`
 - `from_scratch`: if `true` load from config else load pretrained. Defaults to `false`.
+- `wandb`: if `true` use [Weights&Biases](https://docs.wandb.ai/) for training metrics logging. Defaults to `false`.
+- `chkpt_dir`: helpful to set checkpoint directory to mounted Gdrive as the runtime reset deletes files. defaults to current directory.
  
 More fine grade training configuration can be done by modifying the values passed to `HFTrainer`.
 
@@ -23,6 +25,10 @@ More fine grade training configuration can be done by modifying the values passe
 After execution is done, we'll have checkpoints and training logs for both training procedures under the directories `results_scratch_False` and `results_scratch_True` respectilely.
 
 For our experiments, we plan to integrate Weights&Biases logging.
+
+The language model training logs on W&B can be found here:
+- `from_scratch: true`: [./results_scratch_True](https://wandb.ai/parmarsuraj99/huggingface/runs/18gpi9qe?workspace=user-parmarsuraj99)
+- `from_scratch: false`(loading from pretrained model): [./results_scratch_False](https://wandb.ai/parmarsuraj99/huggingface/runs/1e7ha4ti?workspace=user-parmarsuraj99)
 
 --- 
 To make the execution easy on Colab, 
