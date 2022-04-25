@@ -33,3 +33,8 @@ The language model training logs on W&B can be found here:
 --- 
 To make the execution easy on Colab, 
 we have combined the scripts in a notebook `COMP8730_proposed_solution_scripts_test.ipynb`, running this on colab would help you get started with experiment.
+
+---
+Once the models have been saved with all the checkpoints, we used Google Drive to save the checkpoints and the ease of re-loading them. We decided to use Colab for final training to make customizations easy to training. 
+
+run `notebooks/COMP8730_proposed_solution_author_prediction.ipynb` to save and evaluate on Author prediction task
